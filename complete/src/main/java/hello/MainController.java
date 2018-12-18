@@ -18,8 +18,7 @@ public class MainController {
 	private UserRepository userRepository;
 	
 	@GetMapping(path="/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name
-			, @RequestParam String email) {
+	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String email) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 		
@@ -35,4 +34,12 @@ public class MainController {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
+	
+	@GetMapping(path="/delete")
+	public @ResponseBody String deleteUser (@RequestParam Integer id) {
+		User u = userRepository.findById(id).get();
+		userRepository.delete(u);
+		return "Deleted";
+	}
+
 }
